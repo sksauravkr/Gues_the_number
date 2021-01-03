@@ -1,0 +1,70 @@
+import java.util.*;
+import java.lang.Math;
+
+class Game{
+    public int randm(){
+        int min = 10;
+        int max = 50;
+        int rand = (int)(Math.random()*(max-min+1)+min); 
+        return rand;
+    }
+        
+    public int takeUserInput(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter any number between 10 & 50: ");
+        int n = sc.nextInt();
+        if(n == 1){
+            return 0;
+        }
+        return n;
+    }
+    
+    public boolean isCorrectNumber(int n,int rand){
+        int count = 0;
+        if(n >= 50){
+            count++;
+            System.out.println("Your guess is out of box!");
+            return false;
+        }else if(n <= 10 ){
+            count++;
+            System.out.println("Your guess is in lower bound");
+            return false;
+        }else if(n >= 10 && n >= rand + 5 || n <= rand - 5){
+            count++;
+            System.out.println("You are close enough");
+            return false;
+        }else if(n == rand){
+            count++;
+            System.out.println("Your guess is correct in "+count+" chances.");
+            return true;
+        }else{
+            System.out.println("You lost...");
+            return false;
+        }
+    }
+}
+    
+public class Main extends Game
+{
+	public static void main(String[] args) {
+		System.out.println("Press 1 to exit");
+		Game g = new Game();
+		int rand = g.randm();
+		int num = g.takeUserInput();
+		if(num == 0){
+		    System.out.print("Thanks for playing with us..");
+		    return ;
+		  }
+		boolean b = g.isCorrectNumber(num,rand);
+		
+		while(b == false){
+		  rand = g.randm();
+		  num = g.takeUserInput();
+		  if(num == 0){
+		    System.out.print("Thanks for playing with us..");
+		    return ;
+		  }
+		  b = g.isCorrectNumber(num,rand);
+		}
+	}
+}
